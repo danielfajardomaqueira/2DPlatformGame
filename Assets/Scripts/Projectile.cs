@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-
+    //----PUBLIC VARIABLES----
     public float projectileSpeed;
 
     public AudioClip magicSoundFX;
 
+
+    //----PRIVATE VARIABLES----
     private Transform character;
     private Rigidbody2D rigidBody;
 

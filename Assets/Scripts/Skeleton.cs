@@ -8,13 +8,14 @@ public class Skeleton : MonoBehaviour
     [Header("Variables")]
     public float timeShoots = 3f;
     public float detectRadius = 5f;
+    
     public GameObject projectilePrefab;
     
-
     [Header("Sounds")]
     public AudioClip coinSoundFX;
     public AudioClip dieSoundFX;
     //public AudioClip magicSoundFX;
+
 
     //----PRIVATES VARIABLES----
     private int value = 1;
@@ -26,9 +27,10 @@ public class Skeleton : MonoBehaviour
 
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        rigidBody = GetComponent<Rigidbody2D>();
         character = GameObject.FindGameObjectWithTag("Player").transform;
+        rigidBody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        
         StartCoroutine(Shoot());
     }
 
@@ -44,8 +46,8 @@ public class Skeleton : MonoBehaviour
         {
             if (Vector2.Distance(transform.position, character.position) <= detectRadius)
             {
+                
                 Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-                //SoundManager.Instance.PlaySound(magicSoundFX);
             }
             yield return new WaitForSeconds(timeShoots);
         }

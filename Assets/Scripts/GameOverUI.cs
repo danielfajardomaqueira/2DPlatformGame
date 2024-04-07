@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameOverUI : MonoBehaviour
 {
 
-
+    public AudioClip clickSoundFX;
 
     public void Restart()
     {
@@ -16,11 +16,20 @@ public class GameOverUI : MonoBehaviour
         CharacterController.canJump = true;
         CharacterController.isDead = false;
 
-        SceneManager.LoadScene(0);
+        SoundManager.Instance.PlaySound(clickSoundFX);
+
+        SceneManager.LoadScene(3);
     }
 
     public void Quit()
     {
-        //SceneManager.LoadScene(0);
+        CharacterController.canDash = false;
+        CharacterController.canMove = true;
+        CharacterController.canAttack = true;
+        CharacterController.canJump = true;
+        CharacterController.isDead = false;
+
+
+        SceneManager.LoadScene(0);
     }
 }

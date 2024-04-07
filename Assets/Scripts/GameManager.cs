@@ -2,22 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     //----PUBLIC VARIABLES----
     public static GameManager Instance { get; private set; }
+    
+    public int TotalPoints { get { return totalPoints; }/*,set*/ } // Propiedad solo de escritura
+    public int TotalGems { get { return totalGems; } }              // Desde otro script, devuelve el valor de la variable privada(es este caso, totalGems)
+    static public int totalGems;
+
     public HUD hud;
     public GameObject gameOverUI;
-    public int TotalPoints { get { return totalPoints;  }/*,set*/ } // Propiedad solo de escritura
-    public int TotalGems { get { return totalGems; } }              // Desde otro script, devuelve el valor de la variable privada(es este caso, totalGems)
+    //public Button buttonLevel2;
     
 
     //----PRIVATE VARIABLES----
     private int totalPoints;
-    private int lives = 3;
-    private int totalGems;
+    [SerializeField]private int lives = 3;
+    //private int totalGems;
+    
     private CharacterController character;
+    private HighScoreManager highScoreManager;
+
 
     //----SINGLETON----
     private void Awake()
@@ -36,6 +44,21 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         character = FindObjectOfType<CharacterController>();
+
+        highScoreManager = FindObjectOfType<HighScoreManager>();
+        if (highScoreManager == null)
+        {
+            Debug.LogError("HighScoreManager no encontrado en la escena.");
+        }
+        else
+        {
+            // Carga el puntaje alto al iniciar el juego
+            int savedHighScore = PlayerPrefs.GetInt("HighScore", 0);
+            hud.UpdateScore(savedHighScore);
+        }
+
+        totalPoints = 0;
+        hud.UpdateScore(totalPoints);
     }
 
     public void ScorePoints(int pointsToAdd)
@@ -43,6 +66,11 @@ public class GameManager : MonoBehaviour
         totalPoints = totalPoints + pointsToAdd;
         //Debug.Log(totalPoints);
         hud.UpdateScore(TotalPoints);
+
+        if (highScoreManager != null)
+        {
+            highScoreManager.SaveHighScore(TotalPoints);
+        }
     }
 
     public void ScoreGems(int gemsToAdd)
@@ -59,7 +87,6 @@ public class GameManager : MonoBehaviour
             //Game Over
             CharacterController.isDead = true;
             StartCoroutine(GameOver());
-            
         }
         hud.DisableLive(lives);
     }
@@ -74,6 +101,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
         gameOverUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.Confined;
 
         yield return new WaitForSeconds(0.2f);
         Time.timeScale = 0f;
@@ -81,12 +109,12 @@ public class GameManager : MonoBehaviour
 
     public bool RecoverLive()
     {
-        if (lives == 3) //Maximo de vidas que puede tener el jugador.
+        if (lives >= 3) //Maximo de vidas que puede tener el jugador.
         {
             return false; //Termina la ejecucion del metodo si tenemos el maximo de vidas(3).
         }
-        hud.ActivateLive(lives);
-        lives += 1;
+        lives++;
+        hud.ActivateLive(lives - 1);
         return true;
     }
 }

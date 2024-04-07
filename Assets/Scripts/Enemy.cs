@@ -13,15 +13,20 @@ public class Enemy : MonoBehaviour
     public AudioClip coinSoundFX;
     public AudioClip dieSoundFX;
 
+
     //----PRIVATES VARIABLES----
     private bool canAttack = true;
     private bool canMove = true;
-    private SpriteRenderer spriteRenderer;
+
     private int value = 1;
+
+    private SpriteRenderer spriteRenderer;
+    private Rigidbody2D rigidBody;
+
     [SerializeField]private Transform groundController;
     [SerializeField] private float distance;
     [SerializeField] private bool rightDirection;
-    private Rigidbody2D rigidBody;
+    
 
     private void Start()
     {
@@ -44,6 +49,7 @@ public class Enemy : MonoBehaviour
 
             if (groundCheck == false)
             {
+
                 FlipEnemy();
             }
         }
@@ -71,6 +77,7 @@ public class Enemy : MonoBehaviour
         {
             if(canAttack == false)
             {
+
                 return;
             }
             canAttack = false;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FallingRespawn : MonoBehaviour
 {
+    //----PUBLIC VARIABLES----
+    [Header("Sounds")]
     public AudioClip dieSoundFX;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -12,6 +14,7 @@ public class FallingRespawn : MonoBehaviour
         {
             GameManager.Instance.LoseLive();
             other.gameObject.GetComponent<CharacterController>().Respawn();
+            CameraShake.Instance.ShakeCamera(5, 5, 0.5f);
             SoundManager.Instance.PlaySound(dieSoundFX);
         }
     }

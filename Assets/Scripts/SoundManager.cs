@@ -31,9 +31,4 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(audio);
     }
-
-    public void PlayWalkSound(AudioClip audio)
-    {
-        audioSource.PlayOneShot(audio);
-    }
 }

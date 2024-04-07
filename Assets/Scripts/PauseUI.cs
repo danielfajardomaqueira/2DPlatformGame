@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PauseUI : MonoBehaviour
 {
+    //----PUBLIC VARIABLES----
     public GameObject pauseUI;
+    public AudioClip clickSoundFX;
 
-
-    private bool isPause = false;
+    //----PRIVATE VARIABLES----
+    static public bool isPause = false;
     private CharacterController character;
     //private bool previusStateCanDash;
 
@@ -15,8 +17,9 @@ public class PauseUI : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
-        pauseUI.SetActive(false);
+        
         character = FindObjectOfType<CharacterController>();
+        pauseUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -24,6 +27,7 @@ public class PauseUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            
             Pause();
         }
     }
@@ -36,9 +40,9 @@ public class PauseUI : MonoBehaviour
         {
             Time.timeScale = 0f;
             pauseUI.SetActive(true);
-
+            Cursor.lockState = CursorLockMode.Confined;
+            
             //previusStateCanDash = character.canDash;
-
             CharacterController.canMove = false;
             CharacterController.canAttack = false;
             CharacterController.canJump = false;
@@ -49,9 +53,9 @@ public class PauseUI : MonoBehaviour
         {
             Time.timeScale = 1f;
             pauseUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
 
             //character.canDash = previusStateCanDash;
-
             CharacterController.canMove = true;
             CharacterController.canAttack = true;
             CharacterController.canJump = true;
@@ -61,12 +65,18 @@ public class PauseUI : MonoBehaviour
 
     public void Resume()
     {
-        pauseUI.SetActive(false);
         Time.timeScale = 1f;
+        
         isPause = false;
+        pauseUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
 
         CharacterController.canMove = true;
         CharacterController.canAttack = true;
         CharacterController.canJump = true;
+
+        SoundManager.Instance.PlaySound(clickSoundFX);
     }
+
+
 }

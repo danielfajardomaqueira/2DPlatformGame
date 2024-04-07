@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class DashPowerUp : MonoBehaviour
 {
+    //----PUBLIC VARIABLES----
     [Header("Sounds")]
     public AudioClip powerUpSoundFX;
 
+
+    //----PRIVATE VARIABLES----
     private CharacterController character;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -19,6 +22,7 @@ public class DashPowerUp : MonoBehaviour
             character = other.gameObject.GetComponent<CharacterController>();
             if (character != null)
             {
+
                 character.particlesPowerUp.Play();
             }
 

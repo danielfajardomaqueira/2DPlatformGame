@@ -6,10 +6,11 @@ public class CharacterController : MonoBehaviour
 {
     //----PUBLIC VARIABLES----
     [Header("Variables")]
+    public int maxJumps;
+
     public float velocity;
     public float jumpForce;
     public float hitForceReceived;
-    public int maxJumps;
     public float dashingPower = 24f;
     public float dashingTime = 0.2f;
     public float dashingCooldown = 1f;
@@ -35,17 +36,18 @@ public class CharacterController : MonoBehaviour
     public ParticleSystem particlesPowerUp;
     public ParticleSystem particlesAttack;
     public ParticleSystem particlesHealth;
-    
+
 
     //----PRIVATES VARIABLES----
+    private bool rightOrientation = true;
+    private bool isDashing;
+    //[SerializeField] private bool imDamaged = false;
+    private int restJumps;
     private float inputMovement;
+
     private Rigidbody2D rigidBody;
     private BoxCollider2D boxCollider;
-    private bool rightOrientation = true;
-    private int restJumps;
-    private bool isDashing;
     private TrailRenderer trailRenderer;
-    //[SerializeField] private bool imDamaged = false;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
@@ -60,6 +62,8 @@ public class CharacterController : MonoBehaviour
         animator = GetComponent<Animator>();
         trailRenderer = GetComponent<TrailRenderer>();
 
+        Cursor.lockState = CursorLockMode.Locked;
+
         Respawn();
     }
 
@@ -67,11 +71,13 @@ public class CharacterController : MonoBehaviour
     {
         if (isDashing) // Comprueba que se ejecute una vez y no haga mas comprobaciones dentro del metodo Update()
         {
+
             return;
         }
 
         if (isDead == true) // Comprueba que se ejecute una vez y no haga mas comprobaciones dentro del metodo Update()
         {
+
             return;
         }
 
@@ -87,11 +93,13 @@ public class CharacterController : MonoBehaviour
     {
         if (isDashing)
         {
+
             return;
         }
 
         if (isDead == true) // Comprueba que se ejecute una vez y no haga mas comprobaciones dentro del metodo Update()
         {
+
             return;
         }
     }
@@ -110,12 +118,13 @@ public class CharacterController : MonoBehaviour
         {
             if (IsGrounded())
             {
-                restJumps = maxJumps; //Se igualan las 2 variables al tocar el suelo, para reiniciar el "contador" de saltos.
 
+                restJumps = maxJumps; //Se igualan las 2 variables al tocar el suelo, para reiniciar el "contador" de saltos.
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && restJumps > 0)
             {
+
                 restJumps--;
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0f);  // Al dar un salto, el personaje para su velocidad en ejeY. De esta manera, la gravedad al caer no anula el salto.
                 rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // ForceMode2D.Impulse, añade un impulso instantaneo al rigidbody2D dependiendo de la masa del objeto. Esto permite un salto que ocurre al instante.
@@ -127,11 +136,13 @@ public class CharacterController : MonoBehaviour
         //Jumping Animations
         if(Input.GetKeyDown(KeyCode.Space))
         {
+
             animator.SetBool("isJumpping", true);
         }
         
         if (!Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
+
             animator.SetBool("isJumpping", false);
         }
     }
@@ -152,6 +163,7 @@ public class CharacterController : MonoBehaviour
         */
         if (canMove)
         {
+
             inputMovement = Input.GetAxis("Horizontal");
             rigidBody.velocity = new Vector2(inputMovement * velocity, rigidBody.velocity.y);
         }
@@ -160,10 +172,12 @@ public class CharacterController : MonoBehaviour
         //Movement Animation
         if (inputMovement != 0f)
         {
+
             animator.SetBool("isRunning", true);
         }
         else
         {
+
             animator.SetBool("isRunning", false);
         }
     }
@@ -173,6 +187,7 @@ public class CharacterController : MonoBehaviour
     {
         if((rightOrientation == true && inputMovement < 0) || (rightOrientation == false && inputMovement > 0))
         {
+
             rightOrientation = !rightOrientation;
             transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
         }
@@ -185,8 +200,8 @@ public class CharacterController : MonoBehaviour
     {
         canMove = false;
         canAttack = false;
-        
         //imDamaged = true;
+        CameraShake.Instance.ShakeCamera(5, 5, 0.5f);
 
         Vector2 hitDirection;
         if(rigidBody.velocity.x > 0)
@@ -197,7 +212,6 @@ public class CharacterController : MonoBehaviour
         {
             hitDirection = new Vector2(1, 1);
         }
-
         rigidBody.AddForce(hitDirection * hitForceReceived);
 
         StartCoroutine(WaitAndActivateMovement());
@@ -238,6 +252,7 @@ public class CharacterController : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire1") && IsGrounded() && canAttack == true)
         {
+
             StartCoroutine(AttackCooldown());
             animator.SetBool("isAttacking", true);
             SoundManager.Instance.PlaySound(attackSoundFX);
@@ -250,14 +265,13 @@ public class CharacterController : MonoBehaviour
         canAttack = true;
         
         yield return new WaitForSeconds(0.1f);
-        rigidBody.bodyType = RigidbodyType2D.Static;
         canMove = false;
         canJump = false;
+        rigidBody.bodyType = RigidbodyType2D.Static;
         particlesAttack.Play();
 
         yield return new WaitForSeconds(0.3f);
         canAttack = false;
-        
         SoundManager.Instance.PlaySound(attackSoundFX);
         animator.SetBool("isAttacking", false);
 
@@ -272,23 +286,23 @@ public class CharacterController : MonoBehaviour
     #region CHARACTER DASH
     private void CharacterDash()
     {
-        
-
         if (Input.GetButtonDown("Fire2") && canDash == true)
         {
-            StartCoroutine(Dash());
 
+            StartCoroutine(Dash());
         }
     }
 
     IEnumerator Dash()
     {
+        float originalGravity = rigidBody.gravityScale;
         canDash = false;
         isDashing = true;
-        float originalGravity = rigidBody.gravityScale;
+        
         rigidBody.gravityScale = 0f;
         rigidBody.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
         trailRenderer.emitting = true;
+
         SoundManager.Instance.PlaySound(dashingSoundFX);
 
         yield return new WaitForSeconds(dashingTime);
@@ -303,14 +317,15 @@ public class CharacterController : MonoBehaviour
 
     public void Respawn()
     {
+
         transform.position = Vector2.zero;
     }
 
-    
     public void Death()
     {
         if (isDead == true)
         {
+
             canDash = false;
             canMove = false;
             canAttack = false;

@@ -12,6 +12,11 @@ public class HUD : MonoBehaviour
     public GameObject[] lives;
     //public GameManager gameManager;
 
+    void Start()
+    {
+        
+    }
+
     void Update()
     {
         //points.text = GameManager.Instance.TotalPoints.ToString();   

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Live : MonoBehaviour
 {
-
+    //----PUBLIC VARIABLES----
     [Header("Sounds")]
     public AudioClip heartSoundFX;
 
+
+    //----PRIVATE VARIABLES----
     private CharacterController character;
 
     private void OnTriggerEnter2D(Collider2D other)
