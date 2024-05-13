@@ -8,7 +8,7 @@ public class GameOverUI : MonoBehaviour
 
     public AudioClip clickSoundFX;
 
-    public void Restart()
+    public void RestartLevel1()
     {
         CharacterController.canDash = false;
         CharacterController.canMove = true;
@@ -19,6 +19,19 @@ public class GameOverUI : MonoBehaviour
         SoundManager.Instance.PlaySound(clickSoundFX);
 
         SceneManager.LoadScene(3);
+    }
+
+    public void RestartLevel2()
+    {
+        CharacterController.canDash = false;
+        CharacterController.canMove = true;
+        CharacterController.canAttack = true;
+        CharacterController.canJump = true;
+        CharacterController.isDead = false;
+
+        SoundManager.Instance.PlaySound(clickSoundFX);
+
+        SceneManager.LoadScene(4);
     }
 
     public void Quit()

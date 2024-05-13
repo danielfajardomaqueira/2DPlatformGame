@@ -36,6 +36,18 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(3);
     }
 
+    public void LevelTwo()
+    {
+        CharacterController.canMove = true;
+        CharacterController.canAttack = true;
+        CharacterController.canJump = true;
+        CharacterController.canDash = false;
+
+        GameManager.totalGems = 0;
+
+        SceneManager.LoadScene(4);
+    }
+
     public void Instructions()
     {
         SceneManager.LoadScene(1);
