@@ -108,7 +108,7 @@ public class CharacterController : MonoBehaviour
     #region CHARACTER MOVEMENT
     private bool IsGrounded()
     {                                          //Limite del colider su centro, limites de tamaño del collider, angulo del box(0f, nada de angulo), direccion del box hacia el suelo(down), distancia del box(0.2f), mascara de capa con la cual colisionar
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, new Vector2(boxCollider.bounds.size.x, boxCollider.bounds.size.y), 0f, Vector2.down, 0.2f, groundLayer);
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center -Vector3.up * 0.2f , new Vector2(boxCollider.bounds.size.x -0.2f, boxCollider.bounds.size.y -0.2f), 0f, Vector2.down, 0.2f, groundLayer);
         return raycastHit.collider != null;
     }
 
@@ -204,7 +204,7 @@ public class CharacterController : MonoBehaviour
         CameraShake.Instance.ShakeCamera(5, 5, 0.5f);
 
         Vector2 hitDirection;
-        if(rigidBody.velocity.x > 0)
+        if(transform.localScale.x > 0)
         {
             hitDirection = new Vector2(-1, 1);
         }
