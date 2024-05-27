@@ -44,9 +44,9 @@ public class MainMenuUI : MonoBehaviour
 
     public void QuitGame()
     {
-        HighScoreManager.Instance.ResetHighScore();
+        PlayerPrefs.DeleteAll();
         UnlockLevels.unlockLevel2 = false;
-        PlayerPrefs.SetInt("UnlockLevel2", 0);
+        //PlayerPrefs.SetInt("UnlockLevel2", 0);
         Application.Quit();
     }
 }

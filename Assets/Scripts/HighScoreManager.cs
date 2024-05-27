@@ -7,7 +7,7 @@ using TMPro;
 public class HighScoreManager : MonoBehaviour
 {
     public static HighScoreManager Instance { get; private set; }
-    public TextMeshProUGUI highScoreText;
+    //public TextMeshProUGUI highScoreText;
 
     [SerializeField] private int savedHighScore;
     [SerializeField] private int currentHighScore;
@@ -27,6 +27,9 @@ public class HighScoreManager : MonoBehaviour
             return;
         }
 
+        currentHighScore = PlayerPrefs.GetInt(highScore, 0);
+
+        /*
         // Asegurar de que highScoreText esté presente
         GameObject textObject = GameObject.FindGameObjectWithTag("HighScoreText");
         if (textObject != null)
@@ -41,17 +44,23 @@ public class HighScoreManager : MonoBehaviour
         else
         {
             Debug.LogError("No se encontró ningún objeto con la etiqueta HighScoreText.");
-        }
+        }*/
     }
 
     private void Start()
     {
+        //currentHighScore = 0;
 
         savedHighScore = PlayerPrefs.GetInt("HighScore", 0);
-        if (highScoreText != null)
+        /*if (highScoreText != null)
         {
             highScoreText.text = "High Score: " + savedHighScore.ToString();
-        }
+        }*/
+    }
+
+    public int GetHighScore()
+    {
+        return currentHighScore;
     }
 
     public void SaveHighScore(int score)
@@ -61,20 +70,25 @@ public class HighScoreManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("HighScore", score);
             PlayerPrefs.Save();
-            if (highScoreText != null)
+            /*if (highScoreText != null)
             {
                 highScoreText.text = "High Score: " + score.ToString();
-            }
+            }*/
+
+            /*
+            currentHighScore = score;
+            PlayerPrefs.SetInt(highScore, score);
+            PlayerPrefs.Save();*/
         }
     }
 
-    public void ResetHighScore()
+    /*public void ResetHighScore()
     {
         PlayerPrefs.DeleteKey(highScore); // Borrar el puntaje alto guardado
         if (highScoreText != null)
         {
             highScoreText.text = "High Score: 0"; // Actualizar el texto en la interfaz de usuario
         }
-    }
+    }*/
  
 }

@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         character = FindObjectOfType<CharacterController>();
-
+        
         highScoreManager = FindObjectOfType<HighScoreManager>();
         if (highScoreManager == null)
         {
@@ -67,10 +67,13 @@ public class GameManager : MonoBehaviour
         //Debug.Log(totalPoints);
         hud.UpdateScore(TotalPoints);
 
+        highScoreManager.SaveHighScore(TotalPoints);
+
+        /*
         if (highScoreManager != null)
         {
-            highScoreManager.SaveHighScore(TotalPoints);
-        }
+            
+        }*/
     }
 
     public void ScoreGems(int gemsToAdd)

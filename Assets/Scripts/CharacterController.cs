@@ -286,7 +286,7 @@ public class CharacterController : MonoBehaviour
     #region CHARACTER DASH
     private void CharacterDash()
     {
-        if (Input.GetButtonDown("Fire2") && canDash == true)
+        if (Input.GetButtonDown("Fire2") && canDash == true && PauseUI.isPause == false)
         {
 
             StartCoroutine(Dash());
