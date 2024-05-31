@@ -8,7 +8,6 @@ public class HighScoreDisplay : MonoBehaviour
     public TextMeshProUGUI highScoreText;
     private int highScore;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (highScoreText == null)

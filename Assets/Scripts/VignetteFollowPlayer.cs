@@ -28,17 +28,18 @@ public class VignetteFollowPlayer : MonoBehaviour
         if (playerTransform != null && playerCamera != null && volume != null)
         {
             Vector3 playerWorldPosition = playerTransform.position;
-            Vector3 playerScreenPosition = playerCamera.WorldToScreenPoint(playerWorldPosition); // Convierte la posición del jugador a la posición de la pantalla
+            Vector3 playerScreenPosition = playerCamera.WorldToScreenPoint(playerWorldPosition); // Convert player position to screen position
 
-            // Normalizar la posición de la pantalla entre 0 y 1
+            // Normalize screen position between 0 and 1
             Vector2 normalizedScreenPosition = new Vector2(playerScreenPosition.x / Screen.width, playerScreenPosition.y / Screen.height);
 
-            // Ajustar el centro del efecto de viñeta al rango esperado (0 a 1)
+            // Adjust the center of the vignette effect to the expected range (0 to 1)
             Vector2 adjustedCenter = new Vector2(normalizedScreenPosition.x + 0f, normalizedScreenPosition.y + 0f);
             
-            if (volume.profile.TryGet(out Vignette vignette)) // Obtener el perfil del volumen
+            if (volume.profile.TryGet(out Vignette vignette)) //Get volume profile
+
             {
-                // Actualizar el centro del efecto de viñeta
+                //Update center of vignette effect
                 vignette.center.value = adjustedCenter;
             }
             else

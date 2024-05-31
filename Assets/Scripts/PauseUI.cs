@@ -11,9 +11,7 @@ public class PauseUI : MonoBehaviour
     //----PRIVATE VARIABLES----
     static public bool isPause = false;
     private CharacterController character;
-    //private bool previusStateCanDash;
-
-    // Start is called before the first frame update
+ 
     void Start()
     {
         Time.timeScale = 1f;
@@ -22,7 +20,6 @@ public class PauseUI : MonoBehaviour
         pauseUI.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -34,33 +31,32 @@ public class PauseUI : MonoBehaviour
 
     public void Pause()
     {
-        isPause = !isPause;
-
-        if (isPause)
+        if (!CharacterController.isDead)
         {
-            Time.timeScale = 0f;
-            pauseUI.SetActive(true);
-            Cursor.lockState = CursorLockMode.Confined;
-            
-            //previusStateCanDash = character.canDash;
-            CharacterController.canMove = false;
-            CharacterController.canAttack = false;
-            CharacterController.canJump = false;
-            //CharacterController.canDash = false;
-            
-        }
-        else
-        {
-            Time.timeScale = 1f;
-            pauseUI.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
+            isPause = !isPause;
 
-            //character.canDash = previusStateCanDash;
-            CharacterController.canMove = true;
-            CharacterController.canAttack = true;
-            CharacterController.canJump = true;
-            //CharacterController.canDash = true;
+            if (isPause)
+            {
+                Time.timeScale = 0f;
+                pauseUI.SetActive(true);
+                Cursor.lockState = CursorLockMode.Confined;
+
+                CharacterController.canMove = false;
+                CharacterController.canAttack = false;
+                CharacterController.canJump = false;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                pauseUI.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+
+                CharacterController.canMove = true;
+                CharacterController.canAttack = true;
+                CharacterController.canJump = true;
+            }
         }
+        
     }
 
     public void Resume()
@@ -77,6 +73,4 @@ public class PauseUI : MonoBehaviour
 
         SoundManager.Instance.PlaySound(clickSoundFX);
     }
-
-
 }

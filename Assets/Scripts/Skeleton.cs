@@ -8,14 +8,11 @@ public class Skeleton : MonoBehaviour
     [Header("Variables")]
     public float timeShoots = 3f;
     public float detectRadius = 5f;
-    
     public GameObject projectilePrefab;
     
     [Header("Sounds")]
     public AudioClip coinSoundFX;
     public AudioClip dieSoundFX;
-    //public AudioClip magicSoundFX;
-
 
     //----PRIVATES VARIABLES----
     private int value = 1;
@@ -79,7 +76,7 @@ public class Skeleton : MonoBehaviour
         if (rigidBody != null)
         {
 
-            rigidBody.bodyType = RigidbodyType2D.Static; // Este comportamiento impide que reaccione a la gravedad o fuerzas aplicadas.
+            rigidBody.bodyType = RigidbodyType2D.Static; //This behavior prevents it from reacting to gravity or applied forces.
         }
 
         yield return new WaitForSeconds(0.1f);

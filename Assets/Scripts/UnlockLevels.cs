@@ -7,7 +7,6 @@ public class UnlockLevels : MonoBehaviour
     public static UnlockLevels Instance { get; private set; }
     public static bool unlockLevel2;
 
-    
     void Awake()
     {
         if (Instance == null)
@@ -26,6 +25,6 @@ public class UnlockLevels : MonoBehaviour
     public void UnlockLevel2()
     {
         unlockLevel2 = true;
-        PlayerPrefs.SetInt("UnlockLevel2", 1); // Guardar el estado en PlayerPrefs
+        PlayerPrefs.SetInt("UnlockLevel2", 1); // Save Playerprefs states
     }
 }

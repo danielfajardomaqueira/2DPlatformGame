@@ -82,7 +82,7 @@ public class Enemy : MonoBehaviour
             }
             canAttack = false;
 
-            // Cambia el Canal Alfa del sprite cuando el jugador colisiona.
+            //Changes the Alpha Channel of the sprite when the player collides.
             Color color = spriteRenderer.color;
             color.a = 0.5f;
             spriteRenderer.color = color;
@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour
     {
         canAttack = true;
 
-        //Cambia el Canal Alfa cuando pasan los "segundos" del valor de la Variable cooldownAttack
+        //Changes the Alpha Channel when the "seconds" of the cooldownAttack Variable value pass
         Color colour = spriteRenderer.color;
         colour.a = 1f;
         spriteRenderer.color = colour;
@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour
         if (rigidBody != null)
         {
             rigidBody.velocity = Vector2.zero;
-            rigidBody.bodyType = RigidbodyType2D.Static; // Este comportamiento impide que reaccione a la gravedad o fuerzas aplicadas.
+            rigidBody.bodyType = RigidbodyType2D.Static; //This behavior prevents it from reacting to gravity or applied forces.
         }
 
         yield return new WaitForSeconds(0.1f);

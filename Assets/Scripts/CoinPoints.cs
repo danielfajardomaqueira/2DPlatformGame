@@ -10,7 +10,6 @@ public class CoinPoints : MonoBehaviour
 
     [Header("Sounds")]
     public AudioClip coinSoundFX;
-    //public GameManager gameManager;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

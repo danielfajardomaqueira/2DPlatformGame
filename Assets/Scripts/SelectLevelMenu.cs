@@ -9,7 +9,7 @@ public class SelectLevelMenu : MonoBehaviour
 
     void Start()
     {
-        // Verificar si el nivel 2 está desbloqueado
+        // Check if level 2 is unlocked
         if (PlayerPrefs.GetInt("UnlockLevel2", 0) == 1)
         {
             buttonLevelTwo.interactable = true; // Habilitar el botón del nivel 2

@@ -8,8 +8,6 @@ public class Background_MainMenu : MonoBehaviour
     private Vector2 offset;
     private Material material;
 
-    
-
     private void Awake()
     {
         material = GetComponent<SpriteRenderer>().material;

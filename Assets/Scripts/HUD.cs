@@ -10,18 +10,6 @@ public class HUD : MonoBehaviour
     public TextMeshProUGUI points;
     public TextMeshProUGUI gems;
     public GameObject[] lives;
-    //public GameManager gameManager;
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        //points.text = GameManager.Instance.TotalPoints.ToString();   
-    }
-
 
     public void UpdateScore(int totalPoints)
     {

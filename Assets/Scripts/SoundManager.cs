@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))] //Atributo que, siempre que se añada este script a un GameObject, creara una componente AudioSource automaticamente.
+[RequireComponent(typeof(AudioSource))] //Attribute that, whenever this script is added to a GameObject, it will create an AudioSource component automatically.
 
 public class SoundManager : MonoBehaviour
 {
@@ -21,7 +21,6 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();

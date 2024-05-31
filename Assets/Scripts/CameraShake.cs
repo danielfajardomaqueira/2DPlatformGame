@@ -7,16 +7,17 @@ public class CameraShake : MonoBehaviour
 {
     public static CameraShake Instance;
 
-    private CinemachineVirtualCamera mainCamera; //Referencia a la camara virtual.
-    private CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin; // Perfil de ruido agregado a la camara.
+    private CinemachineVirtualCamera mainCamera; //Reference to the virtual camera
+    private CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin; //Noise profile added to the camera.
+
 
     private float moveTime;
-    private float totalMoveTime; //variable para desvanecer poco a poco el movimiento de camara.
+    private float totalMoveTime; //variable to gradually fade the camera movement.
     private float initialIntensity;
 
     private void Awake()
     {
-        Instance = this; //Este objeto.
+        Instance = this; //This object.
         mainCamera = GetComponent<CinemachineVirtualCamera>();
         cinemachineBasicMultiChannelPerlin = mainCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
@@ -36,9 +37,9 @@ public class CameraShake : MonoBehaviour
         {
             moveTime -= Time.deltaTime;
 
-            //Mathf.Lerp = Interpolacion lineal entre el primer parametro hacia segundo parametro por el tiempo (tercer parametro),
-            //la intensidad se reduce gradualmente a 0 segun el tiempo que se coloque en el movimiento, la division hace que se reduzca cada vez menos.
-            cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = Mathf.Lerp(initialIntensity, 0, 1 - (moveTime / totalMoveTime)); //
+            //Mathf.Lerp = Linear interpolation between the first parameter towards the second parameter by time (third parameter)
+            //The intensity is gradually reduced to 0 depending on the time spent in the movement, the division causes it to be reduced less and less.
+            cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = Mathf.Lerp(initialIntensity, 0, 1 - (moveTime / totalMoveTime));
         }
     }
 }

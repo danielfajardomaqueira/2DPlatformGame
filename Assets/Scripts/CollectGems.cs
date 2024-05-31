@@ -8,7 +8,6 @@ public class CollectGems : MonoBehaviour
     //----PUBLIC VARIABLES----
     [Header("Variables")]
     public int value = 1;
-    //public GameManager gameManager;
 
     [Header("Sounds")]
     public AudioClip gemSoundFX;

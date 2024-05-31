@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class MainMenuUI : MonoBehaviour
 {
-
     public GameObject mainMenuPanel;
     public GameObject howToPlayPanel;
     public GameObject configPanel;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1f;
@@ -46,7 +43,6 @@ public class MainMenuUI : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         UnlockLevels.unlockLevel2 = false;
-        //PlayerPrefs.SetInt("UnlockLevel2", 0);
         Application.Quit();
     }
 }

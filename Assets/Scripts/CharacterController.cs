@@ -30,7 +30,6 @@ public class CharacterController : MonoBehaviour
     public AudioClip damageSoundFX;
     public AudioClip attackSoundFX;
     public AudioClip dashingSoundFX;
-    //public SoundManager soundManager;
 
     [Header("Particles")]
     public ParticleSystem particlesPowerUp;
@@ -41,7 +40,6 @@ public class CharacterController : MonoBehaviour
     //----PRIVATES VARIABLES----
     private bool rightOrientation = true;
     private bool isDashing;
-    //[SerializeField] private bool imDamaged = false;
     private int restJumps;
     private float inputMovement;
 
@@ -69,13 +67,14 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
-        if (isDashing) // Comprueba que se ejecute una vez y no haga mas comprobaciones dentro del metodo Update()
+        if (isDashing) // Check that it is executed once and does not do any more checks within the Update() method
         {
 
             return;
         }
 
-        if (isDead == true) // Comprueba que se ejecute una vez y no haga mas comprobaciones dentro del metodo Update()
+        if (isDead == true) //Check that it is executed once and does not do any more checks within the Update() method
+
         {
 
             return;
@@ -97,7 +96,7 @@ public class CharacterController : MonoBehaviour
             return;
         }
 
-        if (isDead == true) // Comprueba que se ejecute una vez y no haga mas comprobaciones dentro del metodo Update()
+        if (isDead == true) //Check that it is executed once and does not do any more checks within the Update() method
         {
 
             return;
@@ -107,7 +106,7 @@ public class CharacterController : MonoBehaviour
 
     #region CHARACTER MOVEMENT
     private bool IsGrounded()
-    {                                          //Limite del colider su centro, limites de tamaño del collider, angulo del box(0f, nada de angulo), direccion del box hacia el suelo(down), distancia del box(0.2f), mascara de capa con la cual colisionar
+    {                                          //Limit of the collider, its center, size limits of the collider, angle of the box (0f, no angle), direction of the box towards the ground (down), distance of the box (0.2f), layer mask with which to collide
         RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center -Vector3.up * 0.2f , new Vector2(boxCollider.bounds.size.x -0.2f, boxCollider.bounds.size.y -0.2f), 0f, Vector2.down, 0.2f, groundLayer);
         return raycastHit.collider != null;
     }
@@ -119,15 +118,15 @@ public class CharacterController : MonoBehaviour
             if (IsGrounded())
             {
 
-                restJumps = maxJumps; //Se igualan las 2 variables al tocar el suelo, para reiniciar el "contador" de saltos.
+                restJumps = maxJumps; //The 2 variables are equalized when touching the ground, to restart the jump "counter"
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && restJumps > 0)
             {
 
                 restJumps--;
-                rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0f);  // Al dar un salto, el personaje para su velocidad en ejeY. De esta manera, la gravedad al caer no anula el salto.
-                rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // ForceMode2D.Impulse, añade un impulso instantaneo al rigidbody2D dependiendo de la masa del objeto. Esto permite un salto que ocurre al instante.
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0f);  //When jumping, the character stops its speed in the Y axis. In this way, gravity when falling does not cancel the jump.
+                rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); //ForceMode2D.Impulse, adds an instantaneous impulse to the rigidbody2D depending on the mass of the object.This allows for a jump to occur instantly.
                 SoundManager.Instance.PlaySound(jumpSoundFX);
             }
         }
@@ -150,17 +149,6 @@ public class CharacterController : MonoBehaviour
     //Movement Logic.
     private void Movement()
     {
-        /*
-        if(canMove == false)
-        {
-            return;
-        }
-        
-        if(imDamaged == true)
-        {
-            return;
-        }
-        */
         if (canMove)
         {
 
@@ -168,7 +156,6 @@ public class CharacterController : MonoBehaviour
             rigidBody.velocity = new Vector2(inputMovement * velocity, rigidBody.velocity.y);
         }
         
-
         //Movement Animation
         if (inputMovement != 0f)
         {
@@ -181,7 +168,6 @@ public class CharacterController : MonoBehaviour
             animator.SetBool("isRunning", false);
         }
     }
-
 
     private void FlipCharacterSprite(float inputMovement)
     {
@@ -200,7 +186,6 @@ public class CharacterController : MonoBehaviour
     {
         canMove = false;
         canAttack = false;
-        //imDamaged = true;
         CameraShake.Instance.ShakeCamera(5, 5, 0.5f);
 
         Vector2 hitDirection;
@@ -216,16 +201,6 @@ public class CharacterController : MonoBehaviour
 
         StartCoroutine(WaitAndActivateMovement());
         SoundManager.Instance.PlaySound(damageSoundFX);
-
-        //Damaged Animation
-       /* if (imDamaged == true)
-        {
-            animator.SetBool("isDamaged", true);
-        }
-        else
-        {
-            animator.SetBool("isDamaged", false);
-        }*/
     }
 
     IEnumerator WaitAndActivateMovement()
@@ -233,17 +208,16 @@ public class CharacterController : MonoBehaviour
         // Wait before checking if it is on the ground
 
         yield return new WaitForSeconds(0.1f);
-        while(!IsGrounded()) // Si IsGrounded es igual a False...
+        while(!IsGrounded()) //If IsGrounded is equal to False...
         {
             // Wait for the next frame.
 
-            yield return null; //Solo quiero que espere un frame
+            yield return null; //I just want it to wait one frame
         }
 
-        // Cuando toca suelo hacemos que...
+        //When it hits the ground we make...
         canMove = true;
         canAttack = true;
-        //imDamaged = false;
     }
     #endregion
 
@@ -256,7 +230,6 @@ public class CharacterController : MonoBehaviour
             StartCoroutine(AttackCooldown());
             animator.SetBool("isAttacking", true);
             SoundManager.Instance.PlaySound(attackSoundFX);
-            //Debug.Log("Attacking");
         }
     }
 
@@ -325,7 +298,6 @@ public class CharacterController : MonoBehaviour
     {
         if (isDead == true)
         {
-
             canDash = false;
             canMove = false;
             canAttack = false;

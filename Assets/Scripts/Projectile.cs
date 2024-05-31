@@ -6,7 +6,6 @@ public class Projectile : MonoBehaviour
 {
     //----PUBLIC VARIABLES----
     public float projectileSpeed;
-
     public AudioClip magicSoundFX;
 
 
@@ -14,7 +13,6 @@ public class Projectile : MonoBehaviour
     private Transform character;
     private Rigidbody2D rigidBody;
 
-    // Start is called before the first frame update
     void Start()
     {
         character = FindObjectOfType<CharacterController>().transform;
@@ -25,7 +23,7 @@ public class Projectile : MonoBehaviour
 
     private void LaunchProjectile()
     {
-        Vector2 directionToCharacter = (character.position - transform.position).normalized; // devuelve vector de magnitud 1
+        Vector2 directionToCharacter = (character.position - transform.position).normalized; //returns vector of magnitude 1
         rigidBody.velocity = directionToCharacter * projectileSpeed;
 
         StartCoroutine(DestroyProjectile());

@@ -9,19 +9,17 @@ public class GameManager : MonoBehaviour
     //----PUBLIC VARIABLES----
     public static GameManager Instance { get; private set; }
     
-    public int TotalPoints { get { return totalPoints; }/*,set*/ } // Propiedad solo de escritura
-    public int TotalGems { get { return totalGems; } }              // Desde otro script, devuelve el valor de la variable privada(es este caso, totalGems)
+    public int TotalPoints { get { return totalPoints; }/*,set*/ } //Write-only property
+    public int TotalGems { get { return totalGems; } }              //From another script, return the value of the private variable(in this case, totalGems)
     static public int totalGems;
 
     public HUD hud;
     public GameObject gameOverUI;
-    //public Button buttonLevel2;
     
 
     //----PRIVATE VARIABLES----
     private int totalPoints;
     [SerializeField]private int lives = 3;
-    //private int totalGems;
     
     private CharacterController character;
     private HighScoreManager highScoreManager;
@@ -52,7 +50,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Carga el puntaje alto al iniciar el juego
+            // Load high score when starting the game
             int savedHighScore = PlayerPrefs.GetInt("HighScore", 0);
             hud.UpdateScore(savedHighScore);
         }
@@ -64,16 +62,8 @@ public class GameManager : MonoBehaviour
     public void ScorePoints(int pointsToAdd)
     {
         totalPoints = totalPoints + pointsToAdd;
-        //Debug.Log(totalPoints);
         hud.UpdateScore(TotalPoints);
-
         highScoreManager.SaveHighScore(TotalPoints);
-
-        /*
-        if (highScoreManager != null)
-        {
-            
-        }*/
     }
 
     public void ScoreGems(int gemsToAdd)
@@ -95,10 +85,6 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator GameOver()
     {
-        //CharacterController.canMove = false;
-        //CharacterController.canAttack = false;
-        //CharacterController.canJump = false;
-
         yield return new WaitForSeconds(0.1f);
         character.Death();
 
@@ -112,9 +98,9 @@ public class GameManager : MonoBehaviour
 
     public bool RecoverLive()
     {
-        if (lives >= 3) //Maximo de vidas que puede tener el jugador.
+        if (lives >= 3) //Maximum number of lives the player can have.
         {
-            return false; //Termina la ejecucion del metodo si tenemos el maximo de vidas(3).
+            return false; //The execution of the method ends if we have the maximum number of lives(3).
         }
         lives++;
         hud.ActivateLive(lives - 1);
