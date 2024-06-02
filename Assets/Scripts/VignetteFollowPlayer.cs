@@ -18,7 +18,7 @@ public class VignetteFollowPlayer : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("El volumen no contiene un ajuste de Vignette.");
+                Debug.LogWarning("The volume does not contain a Vignette setting.");
             }
         }
     }
@@ -44,7 +44,7 @@ public class VignetteFollowPlayer : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("El volumen no contiene un ajuste de viñeta.");
+                Debug.LogWarning("The volume does not contain a Vignette setting.");
             }
         }
     }

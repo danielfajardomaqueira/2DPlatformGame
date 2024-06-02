@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         highScoreManager = FindObjectOfType<HighScoreManager>();
         if (highScoreManager == null)
         {
-            Debug.LogError("HighScoreManager no encontrado en la escena.");
+            Debug.LogError("HighScoreManager not found at the scene.");
         }
         else
         {
